@@ -1,0 +1,56 @@
+Buildpack
+----------- 
+
+Buildpacks produce the droplets that are needed to run our applications. 
+But how do we customize their behavior?
+
+this example explore ways to configure the version of the java runtime that 
+the java buildpack provisions for your application.
+
+1. Review the Java Version reported by articulate
+
+using the url
+and
+cf app articulate
+
+2. Push articulate again, with a custom buildpack 
+
+cf push articulate -p ./articulate-0.2.jar -b https://github.com/cloudfoundry/java-buildpack.git
+
+3. Using your browser, refresh the articulate application.
+It’s likely (but not required) that the Java Version changed.
+
+Note: We instructed our application to use a custom buildpack. The Java Buildpack
+source is continuously updated and it is an online package of the buildpack.
+
+Change the Java version
+----------------------------
+
+1. To run articulate on a specific version Java.
+
+cf set-env articulate JBP_CONFIG_OPEN_JDK_JRE "{jre: { version: 1.8.0_45 }}"
+
+2. Restage articulate.
+
+cf restage articulate
+
+3. Using your browser, refresh the articulate application.
+
+
+Extra lab
+----------
+
+The context path that an application is deployed at can be configured by setting an 
+environment variable
+
+cf set-env articulate JBP_CONFIG_TOMCAT "{tomcat: { context_path: "/test" }}"
+
+
+Note:
+
+While using Java, what items do you think would need customization in your environment?
+
+https://github.com/cloudfoundry/java-buildpack#configuration-and-extension
+
+
+

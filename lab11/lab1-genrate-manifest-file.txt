@@ -1,0 +1,7 @@
+Lab-1
+
+create a manifest from an existing application:
+
+> cf create-app-manifest APP_NAME 
+
+Lab-2

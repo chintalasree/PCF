@@ -1,0 +1,14 @@
+Docker image to PCF
+-----------------------
+
+1. Push the docker image
+cf push batch-app --docker-image kelapure/jsr352app --random-route
+
+2. cf app batch-app
+
+check the the below entry:
+docker image:      kelapure/jsr352app (Build pack is not used)
+
+
+Note: When we deploy the non-docker image, PCF uses build pack
+buildpack:         https://github.com/cloudfoundry-community/jboss-buildpack

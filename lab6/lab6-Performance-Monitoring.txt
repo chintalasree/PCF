@@ -1,0 +1,69 @@
+Application Performance Monitoring
+----------------------------------------
+
+Letus use the newrelic managed service to setup application performance monitoring
+for our app.
+
+1. APM solutions cause applications to consume more memory. Increase the memory 
+limit for each application.
+
+cf scale articulate -m 1G -i 1
+
+2. New Relic  trail version
+
+1. Signup for a 60 day free trial license with New Relic.
+
+2. Obtain license key.
+This can be found under Account Settings from the drop down menu in the upper right
+corner of the page.
+
+3. Create a user provided service instance - it must be called "newrelic". This command 
+will create an interactive prompt for the license-key:
+cf create-user-provided-service newrelic -p license_key
+
+Bind the New Relic Service Instance
+----------------------------------------
+
+1. Bind the newrelic service instance to articulate.
+cf bind-service articulate newrelic
+
+2. Restage articulate.
+cf restage articulate
+
+3. Bind the newrelic service instance to attendee-service.
+cf bind-service attendee-service newrelic
+
+4. Restage attendee-service.
+cf restage attendee-service
+
+Create Some Web Traffic and View in New Relic
+-----------------------------------------------------
+1. Refresh the articulate Service web page multiple times
+2. New Relic -> select APM -> Overview -> Web trasactions time
+
+
+Clean up
+----------
+
+1. Unbind newrelic service instance.
+cf unbind-service articulate newrelic
+
+2. Delete newrelic service instance.
+cf delete-service newrelic
+
+3. Scale back down to our original settings.
+cf scale articulate -m 768M -i 1
+
+4. Restage applications.
+cf restage articulate
+
+
+PCF Metrics
+-------------
+
+PCF Metrics provides application metrics for your application directly inside cloudfoundry.
+It’s an innovative tool that combines application events, metrics (cpu, memory, network), 
+and logs into a powerful view that can help you monitor and gain insight into your 
+application’s behavior over time. In this lab you’ll take a little time to explore PCF Metrics
+and its user interface
+

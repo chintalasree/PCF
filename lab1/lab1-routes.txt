@@ -1,0 +1,52 @@
+
+1. Create an HTTP route:
+    
+    cf create-route SPACE DOMAIN [--hostname HOSTNAME] [--path PATH]
+
+OPTIONS:
+   --hostname, -n      Hostname for the HTTP route (required for shared domains)
+   --path                   Path for the HTTP route
+   --port                   Port for the TCP route
+   --random-port       Create a random port for the TCP route
+
+Ex :  cf create-route development cfapps.io  --hostname myapp  
+        cf create-route development cfapps.io  --hostname myapp  --path info
+			(route is : myapp.cfapps.io/info)
+
+
+2. List Routes
+$ cf routes
+
+3. Check Routes
+Developers cannot create a route that is already taken. To check whether a route is 
+available, developers can use the cf check-route command.
+
+cf check-route store shared-domain.example.com --path /products
+
+4. Map a Route to Your Application
+For an app to receive requests to a route, developers must map the route to the app 
+with the cf map-route command. If the route does not already exist, this command
+creates it.
+
+cf map-route products shared-domain.example.com --hostname store --path products
+cf map-route tcp-app tcp-domain.example.com --port 60000
+
+5. Map a Route with Application Push
+Developers can map a route to their app with the cf push command.
+
+$ cf push myapp -d private-domain.example.com --hostname foo
+
+
+6. push the application with random route
+cf push myapp --random-route
+
+7. Unmap a Route
+Developers can remove a route from an app using the cf unmap-route command.
+
+8. Delete a Route
+Developers can delete a route from a space using the cf delete-route command.
+
+9. To get statistics on each instance of a particular app.
+
+$ cf app myapp
+

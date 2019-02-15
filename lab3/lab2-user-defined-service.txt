@@ -1,0 +1,23 @@
+Add a User-Provided Service Instance
+------------------------------------------
+
+In the enterprise, not all services will be provisioned by Pivotal Cloud Foundry.
+For example, consider your Oracle RAC cluster. How can we connect our applications running on Pivotal
+Cloud Foundry to these external systems?
+
+1. Create a user-provided service instance.
+cf create-user-provided-service attendee-service -p uri
+
+This will create an interactive prompt. For the value of uri, enter your attendee-service application's
+base url:
+
+uri> https://{{attendees_app_uri}}/
+
+2. Bind articulate to the attendee-service user-provided service.
+cf bind-service articulate attendee-service
+
+3. Restart the application
+cf restart articulate
+
+4. Refresh the articulate Services page. We can now see the attendee-service listed under Services.
+

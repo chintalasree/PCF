@@ -1,0 +1,49 @@
+"one-off" task (12 factors)
+----------------
+
+demo :
+"one-off" task that will create the needed schema for us explicitly, as a separate step.
+
+1. attendee-service-> source code-> application.yml -> set generate-ddl to false
+
+2. Rebuild the application jar file with:
+mvn clean package
+
+3. cf create-service cleardb spark attendee-db
+
+4. cf push
+
+5. create a mysql plugin
+cf install-plugin -r "CF-Community" mysql-plugin
+
+6. run the below command from local mysql/bin directory
+cf mysql attendee-db
+
+7. Tail the logs for attendee-service
+cf logs attendee-service
+
+8. In a browser, visit the attendees/ endpoint and verify that you get an error, and 
+verify that the logs contain an error message complaining that the attendees table 
+does not exit.
+
+9. Run a "one-off" task to generate the schema
+
+cf run-task attendee-service ".java-buildpack/open_jdk_jre/bin/java \
+-Dspring.jpa.generate-ddl=true \
+-Dspring.profiles.active=cloud \
+-Dspring.main.web-environment=false \
+-cp . org.springframework.boot.loader.JarLauncher"
+
+(or)
+
+create a task in App Manager-> attendee-service-> Tasks -> Run Task
+
+10. Run the 'cf tasks' command to check on the status of our task:
+cf tasks attendee-service
+
+11. run mysql> show tables;
+
+12. Now, attempt to revisit the attendees endpoint once more, and you’ll see that 
+the call succeeds.
+
+

@@ -1,0 +1,34 @@
+Create a log drain
+--------------------
+
+We will configure application log draining into a log analysis tool with 
+a User Provided Service Instance
+
+1. Sign up for a free Papertrail account
+
+a. Create a Papertrail account, fill in your email and password
+b. Browse to papertrailapp.com/systems/new
+c. Select "I use Cloud Foundry"
+d. "What should we call it?" give it a name - log-drain
+e. Click "Save"
+f. Take note of the url (logs7.papertrailapp.com:13281)
+
+
+2. Create a User Provided Service Instance that streams logs to Papertrail.
+
+cf create-user-provided-service articulate-log-drain -l syslog://{{syslog_drain_url}}
+
+3. Bind the articulate-log-drain service to the articulate application.
+
+cf bind-service articulate articulate-log-drain
+
+4. View articulate in a browser. Refresh as necessary to generate logs.
+
+5. To view the logs in Papertrail do the following:
+a. Click on "Dashboard"
+b. Click on "log-drain"
+
+6. Restart the articulate application and check the logs
+cf restart articulate
+
+

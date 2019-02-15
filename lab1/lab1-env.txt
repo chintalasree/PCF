@@ -1,0 +1,34 @@
+1. Retrieving Environment Variables
+cf env <application-name>
+
+2. Setting Environment Varibales
+cf set-env <app>  <variable name>  <variable value>
+cf unset-env <app> <variable name>
+
+3. Setting Environment variables via Manifest
+---
+# comment in a manifest
+Applications:
+     - name: TestApp
+env:
+     NoDE_ENV: production
+     TRACING: off
+
+LAB:
+----
+
+1. Check envirnoment variables
+cf   env  my-app
+
+Note : observe User_Provided is empty
+
+2. Set user-defined varibale
+cf   set-env  my-app   myenv production
+
+3. unset the variable
+cf  unset-env  my-app   myenv
+
+
+
+	
+

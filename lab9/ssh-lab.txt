@@ -1,0 +1,41 @@
+Accessing Apps with SSH
+
+The Cloud Foundry Command Line Interface (cf CLI) lets you securely log into remote
+host virtual machines (VMs) running Cloud Foundry application instances. 
+
+1. Configuring SSH Access at the Application Level
+
+enables SSH access to all instances of an app:
+$ cf enable-ssh MY-AWESOME-APP
+
+disables SSH access to all instances of an app:
+$ cf disable-ssh MY-AWESOME-APP
+
+2. Configuring SSH Access at the Space Level
+
+Allows SSH access into all apps in a space:
+$ cf allow-space-ssh SPACE-NAME
+
+disallows SSH access into all apps in a space:
+$ cf disallow-space-ssh SPACE-NAME
+
+3. Checking SSH Permissions
+
+check whether an app is accessible with SSH:
+$ cf ssh-enabled MY-AWESOME-APP
+
+check whether all apps running within a space are accessible with SSH:
+$ cf space-ssh-allowed SPACE-NAME
+
+
+4. Logging Into an Application Container with cf SSH
+ cf ssh MY-AWESOME-APP
+
+
+5. To log into the VM container hosting the third instance
+$ cf ssh MY-AWESOME-APP -i 2
+
+
+
+
+

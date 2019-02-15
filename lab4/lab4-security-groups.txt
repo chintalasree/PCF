@@ -1,0 +1,53 @@
+1. List the security groups in your environment.
+cf security-groups
+
+2. PCF ships with multiple security groups. Pick two security groups from the
+list and note the differences in the details of those security groups.
+
+cf security-group public_networks
+
+Managing ASGs
+------------------
+$ cf create-security-group
+Try : cf create-security-group my-asg my-asg.json  (only for admin user)
+
+$ cf update-security-group
+$ cf delete-security-group
+
+Binding ASGs to Running Applications
+------------------------------------------
+
+The command cf running-security-groups lists all security groups that apply to 
+all running applications:
+
+cf running-security-groups
+
+Use these commands to apply (or unapply) a security group to all running applications:
+$ cf bind-running-security-group my-asg
+$ cf unbind-running-security-group my-asg
+
+Binding ASGs to Application Staging
+-----------------------------------------
+
+Security groups can also control the behavior of scripts that stage an application. 
+To list all security groups that apply to the staging of applications, use the command:
+
+cf staging-security-groups
+
+Use these commands to apply (or unapply) a security group to the application 
+staging phase:
+
+$ cf bind-staging-security-group all_open
+$ cf unbind-staging-security-group all_open
+
+Org and Space specific bindings
+------------------------------------
+
+The running-security-groups binding is coarse-grained; it applies to all running 
+applications in a PCF installation. 
+
+For finer-grained control of security groups to specific running applications, 
+these commands can scope the binding to a specific org or space:
+
+$ cf bind-security-group all_open my-org my-space
+$ cf unbind-security-group all_open my-org my-space

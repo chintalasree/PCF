@@ -1,0 +1,48 @@
+Create a Service Instance
+
+1. cf create-service cleardb spark MY-DB  
+
+2. c:\labs\cf-db-services-sample-auto> push app db-example
+
+3. cf enable-ssh db-example
+
+Create Your Service Key
+---------------------------
+
+1. To establish SSH access to your service instance, you must create a service key
+that contains critical information for configuring your SSH tunnel.
+
+$ cf create-service-key MY-DB EXTERNAL-ACCESS-KEY
+
+2. Retrieve your new service key 
+cf service-key MY-DB EXTERNAL-ACCESS-KEY
+
+Configure Your SSH Tunnel
+------------------------------
+
+$ cf ssh -L 63306:us-cdbr-iron-east-01.p-mysql.net:3306 YOUR-HOST-APP
+
+Use any available local port for port forwarding. For example, 63306.
+Replace us-cdbr-iron-east-01.p-mysql.net with the address provided under hostname in the service key retrieved above.
+Replace 3306 with the port provided under port above.
+Replace YOUR-HOST-APP with the name of your host app.
+
+Access Your Service Instance
+---------------------------------
+
+To establish direct command-line access to your service instance, use the relevant command line tool for that service. 
+
+$ mysql -u b5136e448be920 -h 0 -p -D ad_b2fca6t49704585d -P 63306
+
+Replace b5136e448be920 with the username provided under username in your service key.
+-h 0 instructs mysql to connect to your local machine.
+-p instructs mysql to prompt for a password. When prompted, use the password provided under password in your service key.
+Replace ad_b2fca6t49704585d with the database name provided under name in your service key.
+-P 63306 instructs mysql to connect on port 63306.
+
+
+
+
+Ref : https://docs.pivotal.io/pivotalcf/1-12/devguide/deploy-apps/ssh-services.html
+
+

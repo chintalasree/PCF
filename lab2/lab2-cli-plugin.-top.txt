@@ -1,0 +1,13 @@
+CF CLI Plugins
+----------------
+1. cf list-plugin-repos
+
+2. cf add-plugin-repo CF-Community http://plugins.cloudfoundry.org/
+
+3. cf install-plugin -r CF-Community "top"
+Note :  shows live statistics of the targeted PCF
+The live statistics include application statistics and route statistics among 
+others. The primary source of information that the top plugin uses is 
+via monitoring the Cloud Foundry firehose.
+
+

@@ -1,0 +1,38 @@
+Task Application
+------------------
+
+A task is an application or script whose code is included as part of a deployed application,
+but runs independently in its own container.
+
+
+About Tasks
+-------------
+
+In contrast to a long running process (LRP), tasks run for a finite amount of time, 
+then stop. Tasks run in their own containers and are designed to use minimal 
+resources. After a task runs, Cloud Foundry destroys the container running the task.
+
+This is quite powerful in the scenarios where heavy workload can be run without having 
+any dedicated machines for running batch applications.
+
+As a single-use object, a task can be checked for its state and for a success or 
+failure message.
+
+Lab
+-----
+
+1).  labs/pcf-task-service>cf push -t 180
+
+PCF will stage the application, create the droplet using the java buildpack and start 
+a container instance to run the batch application task. 
+
+2). Stop the application instance manually so that it can be run as a one-off task as needed.
+
+3). Execute the following command to run the batch application as a task
+
+cf run-task batch-example ".java-buildpack/open_jdk_jre/bin/java org.springframework.boot.loader.JarLauncher"
+
+4). From console-> select batch-example-> Tasks -> check the status
+
+5). Check the log for the output
+

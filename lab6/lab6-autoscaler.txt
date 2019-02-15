@@ -1,0 +1,53 @@
+Application Autoscaler
+-------------------------
+
+PCF allows us to automate scaling via the
+marketplace service named the App Autoscaler.
+
+1. Ensure the articulate application has one application instance running.
+cf scale articulate -i 1
+
+2. Create a autoscaler service instance.
+cf create-service app-autoscaler standard autoscaler
+
+3. Bind the service to articulate.
+cf bind-service articulate autoscaler
+
+4. Restart the application.
+cf restart articulate
+
+Configuring Autoscaling Service Instance
+----------------------------------------------
+
+5. Select articulate application
+> Enable autoscaling
+> Select Manage Autoscaling
+> Edit instance limits to 2 and the maximum to 5
+
+Note1 : Review SCALING RULES and  SCHEDULED LIMITS
+Note2 : Load test using Jmeter
+
+
+
+Clean up
+----------
+
+1. Unbind the autoscaler service instance.
+cf unbind-service articulate autoscaler
+
+2. Delete the autoscaler service instance.
+cf delete-service autoscaler
+
+3. Scale articulate back to original settings.
+cf scale articulate -i 1
+
+4. Restart articulate.
+cf restart articulate
+
+
+
+
+
+
+
+

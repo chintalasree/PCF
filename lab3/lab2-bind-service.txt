@@ -1,0 +1,51 @@
+1. Push the attendee-service application.
+
+cf push attendee-service -p ./attendee-service-0.1.jar -m 768M --random-route
+
+Note: Does attendee-service start up correctly? Why not?
+
+2. Add a Managed Service
+
+cf marketplace
+
+Note : "cleardb" is a company that specializes in cloud-based MySQL instances
+
+3. create a cleardb service
+cf create-service cleardb spark attendee-mysql
+
+4. Now we need to bind the application with the service instance.
+cf bind-service attendee-service attendee-mysql
+
+5. Restart the application.
+cf restart attendee-service
+
+6. View the attendee-service in a browser
+JSON output is displayed
+
+7. Using REST client try the below 
+Method : post 
+URL: {{attendees_app_uri}}/attendees 
+Header :  Content-Type  application/json
+body :
+{ 
+ "firstName": "mani", 
+    "lastName" : "gopal", 
+    "emailAddress" : "mani@abc.com"
+    }
+
+8. View the environment for attendee-service.
+cf env attendee-service
+
+Note:
+------
+1. Hateoas provides rest documentation
+
+https://attendee-service-impressive-kangaroo.cfapps.io/attendees
+
+check the response and try with the below url
+https://attendee-service-impressive-kangaroo.cfapps.io/attendees/1
+
+2. Hateoas vs Swagger
+
+
+

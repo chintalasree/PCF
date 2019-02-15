@@ -1,0 +1,78 @@
+1. Push the application
+cf push articulate -p ./articulate-0.2.jar -m 768M --random-route --no-start
+
+2. To display the logs
+cf logs articulate
+
+3. Start the application
+cf start articulate
+
+Note :  Access the application, refresh the application and check the logs.
+
+4. Check the events
+cf events articulate
+
+5. Check the logs using findstr
+cf logs articulate | findstr "API CELL"
+
+6. Scale UP the application
+cf scale articulate -m 1G
+
+Note : Observe the logs
+
+7. Scale OUT the application
+cf scale articulate -i 3
+
+Note : Return to articulate in a web browser. Press the Refresh button several times. 
+Observe the Addresses and Instance Index changing.
+
+High Availability
+------------------
+
+8. Check the instances
+cf app articulate
+
+9. Kill the application from the browser and check the instances
+cf app articulate
+
+Note : Failed application instances will be recovered.
+
+10. Check the events, to know which instances are killed
+
+cf events articulate
+
+11. Scale back to one instances
+
+cf scale articulate -i 1
+
+12. Try the same with Apps Manager
+
+
+13. Trace Cloud Controller REST API Calls
+If a command fails or produces unexpected results, re-run it with HTTP tracing 
+enabled to view requests and responses between the Cloud Foundry Command
+Line Interface (cf CLI) and the Cloud Controller REST API.
+
+For example:
+
+Re-run cf push with -v:
+
+cf push APP-NAME -v
+
+Re-run cf push while appending API request diagnostics to a log file:
+
+CF_TRACE=PATH-TO-TRACE.LOG cf push APP-NAME
+
+
+
+14. Install  Open pluggin   (https://plugins.cloudfoundry.org/)
+
+cf install-plugin -r CF-Community "open"
+
+cf open <appname>
+
+
+
+
+
+

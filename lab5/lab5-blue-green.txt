@@ -1,0 +1,66 @@
+Blue-green deployments
+----------------------------
+
+Blue-green deployments are a technique for deploying updates with zero downtime.
+
+Cloudfoundry allows developers to manage everything about their application: 
+from deployment to the management of routes to an application.
+
+1. Let’s push the next version of articulate
+
+cf push articulate-v2 -p ./articulate-0.2.jar -m 768M -n {{articulate_hostname_temp}} --no-start
+
+ex: cf push articulate-v2 -p ./articulate-0.2.jar -m 768M -n https://articulate-shy-hyena-temp.cfapps.io --no-start
+ 
+2. Start the new version of the articulate-v2 app
+cf start articulate-v2
+
+3. Now we have two versions of our app deployed.
+Open a new tab and view version 2 of articulate in your browser. Take note of the application name.
+
+4. Let’s assume we are ready to start directing production traffic to version 2. We need to map our production
+route to articulate-v2.
+
+For example (your domain and subdomain will be different):
+
+cf map-route articulate-v2 {{domain_name}} --hostname {{articulate_hostname}}
+
+ex: cf map-route articulate-v2 cfapps.io --hostname articulate-shy-hyena
+
+5. Move all traffic to version 2.
+Remove the production route from the articulate application
+
+cf unmap-route articulate {{domain_name}} --hostname {{articulate_hostname}}
+ex: cf unmap-route  articulate  cfapps.io  --hostname articulate-shy-hyena
+
+6. Remove the temp route from the articulate-v2 application.
+
+cf unmap-route articulate-v2 {{domain_name}} --hostname {{articulate_hostname}}
+
+ex: cf unmap-route articulate-v2 cfapps.io --hostname httpsarticulate-shy-hyena-tempcfappsio
+
+
+Cleanup
+---------
+
+1. Delete the articulate application.
+cf delete articulate
+
+2. Rename articulate-v2 to articulate.
+cf rename articulate-v2 articulate
+
+
+
+Blue-Green Deployment Plugin
+----------------------------------
+
+1. Visit https://plugins.cloudfoundry.org/
+
+2. Locate the blue-green-deploy plugin and follow instructions to install the plugin
+
+3. Explore the project’s github repository README to learn how to use the plugin
+
+
+
+
+
